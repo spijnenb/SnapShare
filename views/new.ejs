@@ -1,0 +1,11 @@
+<% include ./partials/header.ejs %>
+
+<h1>Add a new Snap</h1>
+<p><a href="/snaps">Go back</a></p>
+
+<form action="/snaps" method="post">
+	<input type="text" name="snap[imgurl]" placeholder="Insert your Snap here">
+	<input type="submit" value="Send">
+</form>
+
+<% include ./partials/footer.ejs %>

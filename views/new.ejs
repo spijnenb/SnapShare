@@ -3,8 +3,9 @@
 <h1>Add a new Snap</h1>
 <p><a href="/snaps">Go back</a></p>
 
-<form action="/snaps" method="post">
-	<input type="text" name="snap[imgurl]" placeholder="Insert your Snap here">
+<form action="/snaps" method="post" enctype="multipart/form-data">
+	<input type="text" name="imgurl" placeholder="Insert a URL">
+	<input type="file" name="image">
 	<input type="submit" value="Send">
 </form>
 

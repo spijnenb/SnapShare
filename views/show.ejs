@@ -8,14 +8,21 @@
 	<div class="row justify-content-center">
 		<div class="col-9">
 			<img src="<%= snap.imgurl %>" class="w-100" alt="<%= snap.title%>">
+			<div class="w-100 mt-1 banner32">
+				<form action="/snaps/<%= snap.id %>?_method=DELETE" method="post">
+					<button class="btn btn-sm btn-danger float-right btn-wider-sm"><%- octicons.trashcan.toSVG({"fill":"white"}) %></button>
+				</form>
+	
+			</div>
+			
 			<div class="text-center m-3">
-				<p><strong>100</strong></p>
+				<p class="w-100"><strong>100</strong></p>
 				<form action="" method="post">
 					<div class="btn-group" role="group">
-						<button type="submit" name="rating" class="btn btn-success w100" value="plus">
+						<button type="submit" name="rating" class="btn btn-success btn-wider-lg" value="plus">
 							<%- octicons['arrow-up'].toSVG({"fill":"darkgreen", "width":"32px"}) %>
 						</button>
-						<button type="submit" name="rating" class="btn btn-danger w100" value="min">
+						<button type="submit" name="rating" class="btn btn-danger btn-wider-lg" value="min">
 							<%- octicons['arrow-down'].toSVG({"fill":"darkred", "width":"32px"}) %>
 						</button>
 					</div>

@@ -9,9 +9,12 @@ body {
 	padding: 5px;
 	width:100%;
 }
-.w100 {
-	width: 100px;
+.btn-wider-sm {
+	width: 40px;
 }
-.w75 {
-	width: 75px;
+.banner32 {
+	height: 32px;
+}
+.btn-wider-lg {
+	width: 100px;
 }

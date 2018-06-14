@@ -1,15 +1,15 @@
-var express 	= require("express"),
-	app			= express(),
-	mongoose 	= require("mongoose"),
-	multer 		= require("multer"),
-	octicons	= require("octicons"),
-	Snap 		= require("./models/snap"),
-	seedDB 		= require("./seed");
+var express 		= require("express"),
+	app				= express(),
+	mongoose 		= require("mongoose"),
+	multer 			= require("multer"),
+	octicons		= require("octicons"),
+	methodOverride 	= require("method-override"),
+	Snap 			= require("./models/snap"),
+	seedDB 			= require("./seed");
 
-seedDB();
-// console.log(octicons);
+// seedDB();
+
 // setup file uploads
-
 var storage = multer.diskStorage({
 	destination: function(req, file, cb){
 		cb(null, './uploads');
@@ -59,6 +59,7 @@ process.env.PORT = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use("/uploads", express.static("uploads"));
+app.use(methodOverride("_method"));
 mongoose.connect("mongodb://localhost/snapshare");
 
 // ROUTES
@@ -105,6 +106,14 @@ app.get("/snaps/:id", function(req, res){
 		} else {
 			res.render("show", {snap:snap, octicons:octicons});
 		}
+	});
+});
+
+// DESTROY ROUTE
+app.delete("/snaps/:id", function(req, res){
+	Snap.findByIdAndRemove(req.params.id, function(err){
+		if (err) console.log(err);
+		res.redirect("/snaps");
 	});
 });
 

@@ -2,9 +2,12 @@ var express 	= require("express"),
 	app			= express(),
 	mongoose 	= require("mongoose"),
 	multer 		= require("multer"),
+	octicons	= require("octicons"),
 	Snap 		= require("./models/snap"),
 	seedDB 		= require("./seed");
 
+seedDB();
+// console.log(octicons);
 // setup file uploads
 
 var storage = multer.diskStorage({
@@ -38,6 +41,7 @@ function fileFilter(req, file, cb) {
 }
 
 function simpleHash() {
+	// todo tmp solution.. refactor with userid+timestamp
 	var letters = "abcdefghijklmnopqrstuvwxyz";
 	var hash = Date.now().toString(16);
 	for (var i = 0; i < 4; i++) {
@@ -46,8 +50,6 @@ function simpleHash() {
 	}
 	return hash;
 }
-
-// seedDB();
 
 // environment vars
 process.env.IP = process.env.IP || "localhost";
@@ -83,15 +85,27 @@ app.get("/snaps/new", function(req, res){
 
 // CREATE ROUTE
 app.post("/snaps", upload.single('image'), function(req, res){
-	var savedImage = (req.file) ? req.file.path : req.body.imgurl;
+	var savedImage = (req.file) ? '/' + req.file.path : req.body.imgurl;
 	if (savedImage) {
-		Snap.create({imgurl:savedImage}, function(err, addedSnap){
+		Snap.create({imgurl:savedImage, title:req.body.title}, function(err, addedSnap){
 			if (err) console.log(err);
 			res.redirect("/snaps");
 		});
 	} else {
-		res.redirect("/snaps");
+		res.send("Only .jpg and .png images are supported");	// todo add error handling
 	}	
+});
+
+// SHOW ROUTE
+app.get("/snaps/:id", function(req, res){
+	Snap.findById(req.params.id, function(err,snap){
+		if (err) {
+			console.log(err);
+			res.redirect("back");
+		} else {
+			res.render("show", {snap:snap, octicons:octicons});
+		}
+	});
 });
 
 app.get('*', function(res, res){

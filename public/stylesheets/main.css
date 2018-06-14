@@ -1,3 +1,17 @@
 body {
 	font-family: 'Roboto', 'Arial', sans-serif;
 }
+.nopadding {
+	padding: 0 !important;
+}
+.grid img {
+	border-radius: 5%;
+	padding: 5px;
+	width:100%;
+}
+.w100 {
+	width: 100px;
+}
+.w75 {
+	width: 75px;
+}

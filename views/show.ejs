@@ -1,0 +1,29 @@
+<% include ./partials/header.ejs %>
+
+<div class="container">
+	<div class="jumbotron text-center">
+		<h1><%= snap.title %></h1>
+		<p><a href="/snaps">Go back</a></p>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-9">
+			<img src="<%= snap.imgurl %>" class="w-100" alt="<%= snap.title%>">
+			<div class="text-center m-3">
+				<p><strong>100</strong></p>
+				<form action="" method="post">
+					<div class="btn-group" role="group">
+						<button type="submit" name="rating" class="btn btn-success w100" value="plus">
+							<%- octicons['arrow-up'].toSVG({"fill":"darkgreen", "width":"32px"}) %>
+						</button>
+						<button type="submit" name="rating" class="btn btn-danger w100" value="min">
+							<%- octicons['arrow-down'].toSVG({"fill":"darkred", "width":"32px"}) %>
+						</button>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<% include ./partials/footer.ejs %>

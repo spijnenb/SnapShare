@@ -1,10 +1,23 @@
 <% include ./partials/header.ejs %>
 
-<h1>index page</h1>
-<p><a href="/snaps/new">Go to Form</a></p>
+<div class="container">
+	<div class="jumbotron text-center">
+			<h1>Index page</h1>
+			<p><a href="/snaps/new">Go to Form</a></p>
+	</div>
+	<div class="row align-items-center grid">
+		<% snaps.forEach(function(snap){ %>
+			<div class="col-sm-6 col-md-3 nopadding">
+			<a href="/snaps/<%= snap._id %>">
+				<img src="<%= snap.imgurl %>">
+			</a>
+			</div>
+			
+		<% }); %>
+	</div>
+	
+</div>
 
-<% snaps.forEach(function(snap){ %>
-	<img src="<%= snap.imgurl %>">
-<% }); %>
+
 
 <% include ./partials/footer.ejs %>

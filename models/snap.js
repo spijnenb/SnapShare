@@ -1,9 +1,10 @@
 var mongoose = require("mongoose");
 
 var snapSchema = new mongoose.Schema({
+	title: String,
 	author: String,
 	imgurl: String,
-	imgbin: {data: Buffer, contentType: String}
+	rating: Number
 });
 
 module.exports = mongoose.model("Snap", snapSchema);

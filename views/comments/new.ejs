@@ -1,0 +1,24 @@
+<% include ../partials/header.ejs %>
+
+<div class="container">
+	<div class="jumbotron text-center">
+		<h1>Add a new Comment</h1>
+		<p><a href="/snaps/<%= snap._id %>">Go back</a></p>
+	</div>
+	<div class="container w-50">
+		<form action="/snaps" method="post">
+			<div class="form-group">
+				<label for="author">Author</label>
+				<input type="text" class="form-control" id="author" name="comment[author]">
+			</div>
+			<div class="form-group">
+				<label for="text">Text</label>
+				<input type="text" class="form-control" id="text" name="comment[text]">
+			</div>
+			<input type="submit" class="btn btn-primary" value="Send">
+		</form>
+	</div>
+
+</div>
+
+<% include ../partials/footer.ejs %>

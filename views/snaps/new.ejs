@@ -1,4 +1,4 @@
-<% include ./partials/header.ejs %>
+<% include ../partials/header.ejs %>
 
 <div class="container">
 	<div class="jumbotron text-center">
@@ -9,17 +9,17 @@
 		<form action="/snaps" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="title">Title</label>
-				<input type="text" class="form-control" name="title">
+				<input type="text" class="form-control" id="title" name="title">
 			</div>
 
 			<div class="form-group">
 				<label for="imgurl">Image URL</label>
-				<input type="text" class="form-control" name="imgurl" placeholder="Insert a URL">
+				<input type="text" class="form-control" id="imgurl" name="imgurl" placeholder="Insert a URL">
 			</div>
 			<p class="lead text-center">OR</p>
 			<div class="form-group">
 				<label for="image">Upload an image</label>
-				<input type="file" class="form-control" name="image">
+				<input type="file" class="form-control" id="image" name="image">
 			</div>
 			<input type="submit" class="btn btn-primary" value="Send">
 		</form>
@@ -27,4 +27,4 @@
 
 </div>
 
-<% include ./partials/footer.ejs %>
+<% include ../partials/footer.ejs %>

@@ -10,7 +10,7 @@
 			<img src="<%= snap.imgurl %>" class="w-100" alt="<%= snap.title%>">
 			<div class="w-100 mt-1 banner32">
 				<form action="/snaps/<%= snap.id %>?_method=DELETE" method="post">
-					<button class="btn btn-sm btn-danger float-right btn-wider-sm"><%- octicons.trashcan.toSVG({"fill":"white"}) %></button>
+					<button class="btn btn-sm btn-danger float-right btn-trashcan"><%- octicons.trashcan.toSVG({"fill":"white"}) %></button>
 				</form>
 	
 			</div>
@@ -19,15 +19,32 @@
 				<p class="w-100"><strong>100</strong></p>
 				<form action="" method="post">
 					<div class="btn-group" role="group">
-						<button type="submit" name="rating" class="btn btn-success btn-wider-lg" value="plus">
+						<button type="submit" name="rating" class="btn btn-success btn-vote" value="plus">
 							<%- octicons['arrow-up'].toSVG({"fill":"darkgreen", "width":"32px"}) %>
 						</button>
-						<button type="submit" name="rating" class="btn btn-danger btn-wider-lg" value="min">
+						<button type="submit" name="rating" class="btn btn-danger btn-vote" value="min">
 							<%- octicons['arrow-down'].toSVG({"fill":"darkred", "width":"32px"}) %>
 						</button>
 					</div>
 				</form>
-				
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-9">
+			<div class="commentbox">
+				<a href="/snaps/<%= snap._id %>/comments/new">
+					<button class="btn btn-sm btn-success btn-new">Add a new Comment</button>
+				</a>
+				<% snap.comments.forEach(function(comment){ %>
+					<hr>
+					<div class="mb-2">
+						<p>
+							<strong><%= comment.author %></strong>
+						</p>
+						<p><%= comment.text %></p>
+					</div>
+				<% }) %>
 			</div>
 		</div>
 	</div>

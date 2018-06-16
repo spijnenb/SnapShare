@@ -2,7 +2,8 @@ var express 	= require("express"),
 	router 		= express.Router(),
 	octicons	= require("octicons"),
 	multer 		= require("multer"),
-	Snap 		= require("../models/snap");
+	Snap 		= require("../models/snap"),
+	Comment		= require("../models/comment");
 
 // setup file uploads - todo refactor middleware
 var storage = multer.diskStorage({
@@ -79,9 +80,9 @@ router.post("/snaps", upload.single('image'), function(req, res){
 
 // SHOW ROUTE
 router.get("/snaps/:id", function(req, res){
-	Snap.findById(req.params.id, function(err,snap){
+	Snap.findById(req.params.id).populate("comments").exec(function(err,snap){
 		if (err) {
-			console.log(err);
+			console.log("Snap not found",err);
 			res.redirect("back");
 		} else {
 			res.render("snaps/show", {snap:snap, octicons:octicons});

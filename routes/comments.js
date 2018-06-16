@@ -20,13 +20,22 @@ router.get("/snaps/:id/comments/new", function(req, res){
 
 // CREATE ROUTE
 router.post("/snaps/:id/comments", function(req, res){
-	Comment.create(req.body.comment, function(err, comment){
+	Snap.findById(req.params.id, function (err, snap){
 		if (err) {
 			console.log(err);
 			res.redirect("back");
 		} else {
-			console.log(comment,"saved");
-			res.redirect("/snaps/" + req.params.id);
+			Comment.create(req.body.comment, function(err, comment){
+				if (err) {
+					console.log(err);
+					res.redirect("back");
+				} else {
+					// link comment to snap object and save
+					snap.comments.push(comment);
+					snap.save();
+					res.redirect("/snaps/" + req.params.id);
+				}
+			});
 		}
 	});
 });

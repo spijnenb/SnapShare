@@ -9,12 +9,24 @@ body {
 	padding: 5px;
 	width:100%;
 }
-.btn-wider-sm {
+.btn-trashcan {
 	width: 40px;
+	padding-bottom: 0;
+}
+.btn-vote {
+	width: 100px;
+	padding-bottom: 0;
+}
+.btn-new {
+	vertical-align: middle;
 }
 .banner32 {
 	height: 32px;
 }
-.btn-wider-lg {
-	width: 100px;
+.commentbox {
+	background-color: #eee;
+	padding: 20px;
+}
+.commentbox p {
+	margin: 0;
 }

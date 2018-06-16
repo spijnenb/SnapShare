@@ -1,7 +1,8 @@
 var express 		= require("express"),
 	app				= express(),
 	mongoose 		= require("mongoose"),
-	multer 			= require("multer"),
+	multer 			= require("multer"),			// handle multipart forms
+	bodyParser		= require("body-parser"),		// handle default forms
 	methodOverride 	= require("method-override"),
 	Snap 			= require("./models/snap"),
 	indexRoutes		= require("./routes/index"),
@@ -19,6 +20,7 @@ process.env.PORT = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use("/uploads", express.static("uploads"));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 mongoose.connect("mongodb://localhost/snapshare");
 

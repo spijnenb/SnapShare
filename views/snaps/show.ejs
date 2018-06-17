@@ -10,7 +10,7 @@
 			<img src="<%= snap.imgurl %>" class="w-100" alt="<%= snap.title%>">
 			<div class="w-100 mt-1 banner32">
 				<form action="/snaps/<%= snap.id %>?_method=DELETE" method="post">
-					<button class="btn btn-sm btn-danger float-right btn-trashcan"><%- octicons.trashcan.toSVG({"fill":"white"}) %></button>
+					<button class="btn btn-sm btn-danger float-right btn-wide"><%- octicons.trashcan.toSVG({"fill":"white"}) %></button>
 				</form>
 	
 			</div>
@@ -39,6 +39,20 @@
 				<% snap.comments.forEach(function(comment){ %>
 					<hr>
 					<div class="mb-2">
+						<div class="float-right p-1">
+							<form action="/snaps/<%= snap._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+								<button class="btn btn-sm btn-danger btn-wide">
+									<%- octicons.trashcan.toSVG({"fill":"white"}) %>
+								</button>
+							</form>
+						</div>
+						<div class="float-right p-1">
+							<a href="/snaps/<%= snap._id %>/comments/<%= comment._id %>/edit">
+								<button class="btn btn-sm btn-warning btn-wide">
+									<%- octicons.pencil.toSVG({"fill":"white"}) %>
+								</button>
+							</a>
+						</div>
 						<p>
 							<strong><%= comment.author %></strong>
 						</p>

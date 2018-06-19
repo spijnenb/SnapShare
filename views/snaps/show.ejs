@@ -7,10 +7,11 @@
 	</div>
 	<div class="row justify-content-center">
 		<div class="col-9">
+			<p>posted by <%= snap.author.username %></p>
 			<img src="<%= snap.imgurl %>" class="w-100" alt="<%= snap.title%>">
 			<div class="w-100 mt-1 banner32">
 				<form action="/snaps/<%= snap.id %>?_method=DELETE" method="post">
-					<button class="btn btn-sm btn-danger float-right btn-wide"><%- octicons.trashcan.toSVG({"fill":"white"}) %></button>
+					<button class="btn btn-sm btn-danger float-right btn-wide"><%- octicons.trashcan.toSVG({"class":"octi-sm"}) %></button>
 				</form>
 	
 			</div>
@@ -20,10 +21,10 @@
 				<form action="" method="post">
 					<div class="btn-group" role="group">
 						<button type="submit" name="rating" class="btn btn-success btn-vote" value="plus">
-							<%- octicons['arrow-up'].toSVG({"fill":"darkgreen", "width":"32px"}) %>
+							<%- octicons['arrow-up'].toSVG({"class":"octi-vote-plus"}) %>
 						</button>
 						<button type="submit" name="rating" class="btn btn-danger btn-vote" value="min">
-							<%- octicons['arrow-down'].toSVG({"fill":"darkred", "width":"32px"}) %>
+							<%- octicons['arrow-down'].toSVG({"class":"octi-vote-min"}) %>
 						</button>
 					</div>
 				</form>
@@ -42,19 +43,19 @@
 						<div class="float-right p-1">
 							<form action="/snaps/<%= snap._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
 								<button class="btn btn-sm btn-danger btn-wide">
-									<%- octicons.trashcan.toSVG({"fill":"white"}) %>
+									<%- octicons.trashcan.toSVG({"class":"octi-sm"}) %>
 								</button>
 							</form>
 						</div>
 						<div class="float-right p-1">
 							<a href="/snaps/<%= snap._id %>/comments/<%= comment._id %>/edit">
 								<button class="btn btn-sm btn-warning btn-wide">
-									<%- octicons.pencil.toSVG({"fill":"white"}) %>
+									<%- octicons.pencil.toSVG({"class":"octi-sm"}) %>
 								</button>
 							</a>
 						</div>
 						<p>
-							<strong><%= comment.author %></strong>
+							<strong><%= comment.author.username %></strong>
 						</p>
 						<p><%= comment.text %></p>
 					</div>

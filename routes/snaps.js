@@ -1,6 +1,5 @@
 var express 	= require("express"),
 	router 		= express.Router(),
-	octicons	= require("octicons"),
 	multer 		= require("multer"),
 	Snap 		= require("../models/snap"),
 	Comment		= require("../models/comment");
@@ -68,8 +67,12 @@ router.get("/snaps/new", function(req, res){
 // CREATE ROUTE
 router.post("/snaps", upload.single('image'), function(req, res){
 	var savedImage = (req.file) ? '/' + req.file.path : req.body.imgurl;
+	var author = {
+		id: req.user._id,
+		username: req.user.username
+	}
 	if (savedImage) {
-		Snap.create({imgurl:savedImage, title:req.body.title}, function(err, addedSnap){
+		Snap.create({imgurl:savedImage, title:req.body.title, author:author}, function(err, addedSnap){
 			if (err) console.log(err);
 			res.redirect("/snaps");
 		});
@@ -85,7 +88,7 @@ router.get("/snaps/:id", function(req, res){
 			console.log("Snap not found",err);
 			res.redirect("back");
 		} else {
-			res.render("snaps/show", {snap:snap, octicons:octicons});
+			res.render("snaps/show", {snap:snap});
 		}
 	});
 });

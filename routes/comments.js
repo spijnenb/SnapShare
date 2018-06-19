@@ -19,13 +19,20 @@ router.get("/snaps/:id/comments/new", function(req, res){
 });
 
 // CREATE ROUTE
-router.post("/snaps/:id/comments", function(req, res){
+router.post("/snaps/:id/comments", function(req, res){		// todo add middleware to prevent crash
+	var newComment = Comment({
+		text: req.body.comment.text,
+		author: {
+			id: req.user._id,
+			username: req.user.username
+		}
+	});
 	Snap.findById(req.params.id, function (err, snap){
 		if (err) {
 			console.log(err);
 			res.redirect("back");
 		} else {
-			Comment.create(req.body.comment, function(err, comment){
+			Comment.create(newComment, function(err, comment){
 				if (err) {
 					console.log(err);
 					res.redirect("back");

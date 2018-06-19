@@ -30,3 +30,26 @@ body {
 .commentbox p {
 	margin: 0;
 }
+.octi-logo {
+	fill: white;
+	width: 32px;
+	height: 32px;
+	vertical-align: text-bottom;
+}
+.octi-sm {
+	fill: white;
+	height: 16px; 
+}
+.octi-nav {
+	vertical-align: text-top;
+}
+.octi-vote-plus {
+	fill: darkgreen;
+	width: 48px;
+	height: 48px;
+}
+.octi-vote-min {
+	fill: darkred;
+	width: 48px;
+	height: 48px;
+}

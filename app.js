@@ -7,6 +7,7 @@ var express 		= require("express"),
 	octicons		= require("octicons"),
 	passport		= require("passport"),
 	LocalStrategy	= require("passport-local"),
+	flash			= require("connect-flash"),
 	Snap 			= require("./models/snap"),
 	User			= require("./models/user.js"),
 	indexRoutes		= require("./routes/index"),
@@ -26,6 +27,7 @@ app.use(express.static(__dirname + "/public"));
 app.use("/uploads", express.static("uploads"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+app.use(flash());
 mongoose.connect("mongodb://localhost/snapshare");
 
 // Passport config
@@ -44,6 +46,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
 	res.locals.octicons = octicons;
 	res.locals.currentUser = req.user;
+	res.locals.error = req.flash("error");
+	res.locals.success = req.flash("success");
 	next();
 });
 

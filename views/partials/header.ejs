@@ -43,3 +43,11 @@
 			</ul>
 		</div>
 	</nav>
+
+	<% if (error) { %>
+		<%= "error:" + error %>
+	<% } %>
+	<br>
+	<% if (success) { %>
+		<%= "succes:" + success %>
+	<% } %>

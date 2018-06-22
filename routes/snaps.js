@@ -46,13 +46,11 @@ function simpleHash() {
 	return hash;
 }
 
-
 // INDEX ROUTE
 router.get("/snaps", function(req, res){
 	Snap.find({}, function(err, snaps){
 		if (err) {
-			console.log(err);
-			res.send("Something went wrong :S");
+			res.send("Something went wrong, cannot find Snaps :S");
 		} else {
 			res.render("snaps/index", {snaps:snaps});
 		}
@@ -73,20 +71,21 @@ router.post("/snaps", upload.single('image'), function(req, res){
 	}
 	if (savedImage) {
 		Snap.create({imgurl:savedImage, title:req.body.title, author:author}, function(err, addedSnap){
-			if (err) console.log(err);
+			if (err) req.flash("error", err.message);
 			res.redirect("/snaps");
 		});
 	} else {
-		res.send("Only .jpg and .png images are supported");	// todo add error handling
+		req.flash("error", "Only .jpg and .png images are supported");
+		res.redirect("/snaps/new");
 	}	
 });
 
 // SHOW ROUTE
 router.get("/snaps/:id", function(req, res){
 	Snap.findById(req.params.id).populate("comments").exec(function(err,snap){
-		if (err) {
-			console.log("Snap not found",err);
-			res.redirect("back");
+		if (err || !snap) {
+			req.flash("error", "Cannot find Snap");
+			res.redirect("/snaps");
 		} else {
 			res.render("snaps/show", {snap:snap});
 		}
@@ -95,8 +94,12 @@ router.get("/snaps/:id", function(req, res){
 
 // DESTROY ROUTE
 router.delete("/snaps/:id", function(req, res){
-	Snap.findByIdAndRemove(req.params.id, function(err){
-		if (err) console.log(err);
+	Snap.findByIdAndRemove(req.params.id, function(err, deletedSnap){
+		if (err || !deletedSnap) {
+			req.flash("error", "Cannot find Snap to delete");
+		} else {
+			req.flash("success", "Snap deleted");
+		}
 		res.redirect("/snaps");
 	});
 });

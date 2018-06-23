@@ -12,10 +12,7 @@ var express 		= require("express"),
 	User			= require("./models/user.js"),
 	indexRoutes		= require("./routes/index"),
 	snapRoutes		= require("./routes/snaps"),
-	commentRoutes	= require("./routes/comments"),
-	seedDB 			= require("./seed");
-
-// seedDB();
+	commentRoutes	= require("./routes/comments");
 
 // environment vars
 process.env.IP = process.env.IP || "localhost";

@@ -1,6 +1,7 @@
 var express 	= require("express"),
 	router 		= express.Router(),
 	multer 		= require("multer"),
+	middleware	= require("../middleware/index"),
 	Snap 		= require("../models/snap"),
 	Comment		= require("../models/comment");
 
@@ -58,12 +59,12 @@ router.get("/snaps", function(req, res){
 });
 
 // NEW ROUTE
-router.get("/snaps/new", function(req, res){
+router.get("/snaps/new", middleware.isLoggedIn, function(req, res){
 	res.render("snaps/new");
 });
 
 // CREATE ROUTE
-router.post("/snaps", upload.single('image'), function(req, res){
+router.post("/snaps", middleware.isLoggedIn, upload.single('image'), function(req, res){
 	var savedImage = (req.file) ? '/' + req.file.path : req.body.imgurl;
 	var author = {
 		id: req.user._id,
@@ -93,7 +94,7 @@ router.get("/snaps/:id", function(req, res){
 });
 
 // DESTROY ROUTE
-router.delete("/snaps/:id", function(req, res){
+router.delete("/snaps/:id", middleware.checkSnapOwnership, function(req, res){
 	Snap.findByIdAndRemove(req.params.id, function(err, deletedSnap){
 		if (err || !deletedSnap) {
 			req.flash("error", "Cannot find Snap to delete");

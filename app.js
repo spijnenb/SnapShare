@@ -9,10 +9,13 @@ var express 		= require("express"),
 	LocalStrategy	= require("passport-local"),
 	flash			= require("connect-flash"),
 	Snap 			= require("./models/snap"),
-	User			= require("./models/user.js"),
+	User			= require("./models/user"),
 	indexRoutes		= require("./routes/index"),
 	snapRoutes		= require("./routes/snaps"),
-	commentRoutes	= require("./routes/comments");
+	commentRoutes	= require("./routes/comments"),
+	seedDB			= require("./seed");
+
+seedDB(1);
 
 // environment vars
 process.env.IP = process.env.IP || "localhost";

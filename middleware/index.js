@@ -1,5 +1,6 @@
-var Snap = require("../models/snap");
-var Comment = require("../models/comment");
+var Snap 	= require("../models/snap"),
+	Comment = require("../models/comment"),
+	User 	= require("../models/user");
 
 var middlewareObject = {};
 
@@ -60,6 +61,39 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
 						}
 					}
 				});
+			}
+		});
+	} else {
+		req.flash("error", "Please login first");
+		res.redirect("back");
+	}
+}
+
+middlewareObject.alreadyVoted = function(req, res, next){
+	var goToNext = true;
+	// check if user is logged in
+	if (req.isAuthenticated()) {
+		// get user
+		User.findById(req.user._id, function(err, user){
+			if (err || !user) {
+				req.flash("error", "Something went wrong");
+				res.redirect("back");
+			} else {
+				// votes array contains all snaps that the user voted on
+				user.votes.forEach(function(vote){
+					// cannot set headers with callback, therefore use goToNext var
+					// if vote equals current snap, don't go to next
+					if (vote.equals(req.params.id)) {
+						
+						goToNext = false;
+					}
+				});
+				if (goToNext) {
+					next();
+				} else {
+					req.flash("error", "You already voted on this Snap");
+					res.redirect("back");
+				}
 			}
 		});
 	} else {

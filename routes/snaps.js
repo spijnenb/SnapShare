@@ -3,7 +3,8 @@ var express 	= require("express"),
 	multer 		= require("multer"),
 	middleware	= require("../middleware/index"),
 	Snap 		= require("../models/snap"),
-	Comment		= require("../models/comment");
+	Comment		= require("../models/comment"),
+	User		= require("../models/user");
 
 // setup file uploads - todo refactor middleware
 var storage = multer.diskStorage({
@@ -70,8 +71,15 @@ router.post("/snaps", middleware.isLoggedIn, upload.single('image'), function(re
 		id: req.user._id,
 		username: req.user.username
 	}
+	var data = {
+		imgurl: savedImage,
+		title: req.body.title,
+		author: author,
+		rating: 0
+	}
+
 	if (savedImage) {
-		Snap.create({imgurl:savedImage, title:req.body.title, author:author}, function(err, addedSnap){
+		Snap.create(data, function(err, addedSnap){
 			if (err) req.flash("error", err.message);
 			res.redirect("/snaps");
 		});
@@ -103,6 +111,42 @@ router.delete("/snaps/:id", middleware.checkSnapOwnership, function(req, res){
 		}
 		res.redirect("/snaps");
 	});
+});
+
+// Voting route
+router.post("/snaps/:id",middleware.alreadyVoted, function(req, res){
+	var vote = req.body.rating;
+	// get snap, update value, save
+	Snap.findById(req.params.id, function(err, snap){
+		if (err || !snap) {
+			req.flash("error", "Snap not found");
+			res.redirect("back");
+		} else {
+			if (vote === "plus" || vote === "min") {
+				if (vote === "plus") {
+					snap.rating++;
+				} else if (vote === "min") {
+					snap.rating--;
+				}
+				User.findById(req.user, function(err, user){
+					// find user, add snap to user's voted snaps
+					if (err || !user) {
+						console.log(user);
+						req.flash("Something went wrong, Please try again");
+						res.redirect("back");
+					} else {
+						user.votes.push(snap.id);
+						snap.save();
+						user.save();
+						res.redirect("/snaps/" + req.params.id);
+					}
+				});
+			} else {
+				req.flash("error", "Something went wrong, vote not saved");
+				res.redirect("back");
+			}
+		}
+	})
 });
 
 module.exports = router;

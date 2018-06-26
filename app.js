@@ -8,14 +8,15 @@ var express 		= require("express"),
 	passport		= require("passport"),
 	LocalStrategy	= require("passport-local"),
 	flash			= require("connect-flash"),
+	seedDB			= require("./seed"),
+	// models and routes
 	Snap 			= require("./models/snap"),
 	User			= require("./models/user"),
 	indexRoutes		= require("./routes/index"),
 	snapRoutes		= require("./routes/snaps"),
-	commentRoutes	= require("./routes/comments"),
-	seedDB			= require("./seed");
+	commentRoutes	= require("./routes/comments");
 
-seedDB(1);
+// seedDB(1);
 
 // environment vars
 process.env.IP = process.env.IP || "localhost";
@@ -28,7 +29,14 @@ app.use("/uploads", express.static("uploads"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(flash());
-mongoose.connect("mongodb://localhost/snapshare");
+
+// connect to DB server
+mongoose.connect("mongodb://localhost/snapshare", function(err){
+	if (err) {
+		console.log(err.message);
+		process.exit();
+	}
+});
 
 // Passport config
 app.use(require("express-session")({

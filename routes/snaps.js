@@ -84,7 +84,7 @@ router.post("/snaps", middleware.isLoggedIn, upload.single('image'), function(re
 			res.redirect("/snaps");
 		});
 	} else {
-		req.flash("error", "Only .jpg and .png images are supported");
+		req.flash("error", "Only .jpg and .png images are supported. Max 500kb");
 		res.redirect("/snaps/new");
 	}	
 });

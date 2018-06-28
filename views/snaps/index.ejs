@@ -2,19 +2,38 @@
 
 <div class="container">
 	<div class="jumbotron text-center">
-			<h1>Index page</h1>
-			<p><a href="/snaps/new">Go to Form</a></p>
+			<h1>Snapshare</h1>
+			<p class="lead">Share your favorite Snaps</p>
+			<a href="/snaps/new" class="btn btn-primary">Add a new Snap</a>
 	</div>
 	<div class="row align-items-center grid">
-		<% snaps.forEach(function(snap){ %>
-			<div class="col-sm-6 col-md-3 nopadding">
-			<a href="/snaps/<%= snap._id %>">
-				<img src="<%= snap.imgurl %>">
-			</a>
+		<% for (var i = snaps.length - 1; i >= 0; i--) { %>
+			<div class="col-sm-6 col-md-3 p-0">
+				<div class="snap-container">
+						<a href="/snaps/<%= snaps[i]._id %>">
+							<img src="<%= snaps[i].imgurl %>" class="snap" alt="<%= snaps[i].title %>">
+							<div class="label">
+								<div class="btn btn-primary label-text">
+									<%- octicons["arrow-up"].toSVG({"class":"octi-sm"}) %>
+									<%- octicons["arrow-down"].toSVG({"class":"octi-sm-label"}) %>
+									<%= snaps[i].rating %>
+									<br>
+									<%- octicons.comment.toSVG({"class":"octi-sm-label"}) %>
+									<%= snaps[i].comments.length %> 
+									<% if (snaps[i].comments.length === 1) { %>
+										comment
+									<% } else { %>
+										comments
+									<% } %>
+								</div>
+							</div>
+						</a>
+				</div>
 			</div>
-			
-		<% }); %>
+		<% } %>
 	</div>
 </div>
+
+
 
 <% include ../partials/footer.ejs %>

@@ -10,7 +10,7 @@ router.get("/", function(req, res){
 
 // User signup
 router.get("/register", function(req, res){
-	res.render("register");
+	res.render("register", {page:"register"});
 });
 
 router.post("/register", function(req, res){
@@ -30,14 +30,13 @@ router.post("/register", function(req, res){
 
 // user login
 router.get("/login", function(req, res){
-	res.render("login");
+	res.render("login", {page:"login"});
 });
 
 router.post("/login", passport.authenticate("local", {
 	successRedirect: "/snaps",
 	failureRedirect: "/login",
-	failureFlash: true,
-	successFlash: "Welcome"
+	failureFlash: true
 }),function(req, res){});
 
 router.get("/logout", function(req, res){

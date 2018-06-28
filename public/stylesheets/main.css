@@ -56,7 +56,7 @@ body {
 	height: 48px;
 }
 .jumbotron {
-	background-color: #fff;
+	background-color: #eee;
 }
 .snap-container {
 	position: relative;
@@ -87,4 +87,14 @@ body {
 }
 .navbar-dark .navbar-text {
 	color: #fff;
+}
+.flash-message {
+	text-align: center;
+	width: 100%;
+	max-width: 400px;	
+	position: absolute;
+	top: 7%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
 }

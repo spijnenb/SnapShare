@@ -78,11 +78,14 @@ router.post("/snaps", middleware.isLoggedIn, upload.single('image'), function(re
 		rating: 0
 	}
 
-	if (savedImage) {
+	if (savedImage && data.title.length > 1) {
 		Snap.create(data, function(err, addedSnap){
 			if (err) req.flash("error", err.message);
 			res.redirect("/snaps");
 		});
+	} else if (data.title.length < 1) {
+		req.flash("error", "Don't forget to fill in a title");
+		res.redirect("/snaps/new");
 	} else {
 		req.flash("error", "Only .jpg and .png images are supported. Max 500kb");
 		res.redirect("/snaps/new");
@@ -138,6 +141,7 @@ router.post("/snaps/:id",middleware.alreadyVoted, function(req, res){
 						user.votes.push(snap.id);
 						snap.save();
 						user.save();
+						req.flash("success", "Vote saved");
 						res.redirect("/snaps/" + req.params.id);
 					}
 				});

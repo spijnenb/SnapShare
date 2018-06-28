@@ -8,7 +8,6 @@ var express 		= require("express"),
 	passport		= require("passport"),
 	LocalStrategy	= require("passport-local"),
 	flash			= require("connect-flash"),
-	seedDB			= require("./seed"),
 	// models and routes
 	Snap 			= require("./models/snap"),
 	User			= require("./models/user"),
@@ -16,7 +15,8 @@ var express 		= require("express"),
 	snapRoutes		= require("./routes/snaps"),
 	commentRoutes	= require("./routes/comments");
 
-// seedDB(1);
+	// clears database
+	var clearDB		= require("./clearDB")();
 
 // environment vars
 process.env.IP = process.env.IP || "localhost";

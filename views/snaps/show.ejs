@@ -1,62 +1,63 @@
 <% include ../partials/header.ejs %>
 
-<div class="container">
+<div class="container-fluid p-0">
 	<div class="jumbotron text-center">
 		<h1><%= snap.title %></h1>
-		<p><a href="/snaps">Go back</a></p>
+		<% if (currentUser && snap.author.id.equals(currentUser.id)) { %>
+		<form action="/snaps/<%= snap.id %>?_method=DELETE" method="post">
+			<p class="lead">
+				Posted by <%= snap.author.username %>
+				<button class="btn btn-sm btn-danger btn-wide"><%- octicons.trashcan.toSVG({"class":"octi-sm"}) %></button>
+			</p>
+		</form>
+		<% } else { %>
+			<p class="lead">Posted by <%= snap.author.username %></p>
+		<% } %>
 	</div>
+</div>
+<div class="container">
 	<div class="row justify-content-center">
-		<div class="col-9">
-			<p>posted by <%= snap.author.username %></p>
-			<img src="<%= snap.imgurl %>" class="w-100" alt="<%= snap.title%>">
-			<div class="w-100 mt-1 banner32">
-				<form action="/snaps/<%= snap.id %>?_method=DELETE" method="post">
-					<button class="btn btn-sm btn-danger float-right btn-wide"><%- octicons.trashcan.toSVG({"class":"octi-sm"}) %></button>
-				</form>
-	
-			</div>
-			
-			<div class="text-center m-3">
-				<p class="w-100"><strong><%= snap.rating %></strong></p>
-				<form action="" method="post">
-					<div class="btn-group" role="group">
-						<button type="submit" name="rating" class="btn btn-success btn-vote" value="plus">
-							<%- octicons['arrow-up'].toSVG({"class":"octi-vote-plus"}) %>
-						</button>
-						<button type="submit" name="rating" class="btn btn-danger btn-vote" value="min">
-							<%- octicons['arrow-down'].toSVG({"class":"octi-vote-min"}) %>
-						</button>
-					</div>
-				</form>
-			</div>
+		<div class="col-sm-12 col-md-9">
+			<img src="<%= snap.imgurl %>" class="snap-lg" alt="<%= snap.title%>">
 		</div>
 	</div>
 	<div class="row justify-content-center">
 		<div class="col-9">
+			<div class="rating"><strong>Rating: <%= snap.rating %></strong></div>
 			<div class="commentbox">
 				<a href="/snaps/<%= snap._id %>/comments/new">
 					<button class="btn btn-sm btn-success btn-new">Add a new Comment</button>
 				</a>
+				<form action="" method="post" class="float-right">
+					<div class="btn-group" role="group">
+						<button type="submit" name="rating" class="btn btn-success btn-sm btn-wide" value="plus">
+							<%- octicons["chevron-up"].toSVG({"class":"octi-nav octi-sm"}) %>
+						</button>
+						<button type="submit" name="rating" class="btn btn-danger btn-sm btn-wide" value="min">
+							<%- octicons["chevron-down"].toSVG({"class":"octi-nav octi-sm"}) %>
+						</button>
+					</div>
+				</form>
 				<% snap.comments.forEach(function(comment){ %>
 					<hr>
 					<div class="mb-2">
-						<div class="float-right p-1">
-							<form action="/snaps/<%= snap._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
-								<button class="btn btn-sm btn-danger btn-wide">
-									<%- octicons.trashcan.toSVG({"class":"octi-sm"}) %>
-								</button>
-							</form>
-						</div>
-						<div class="float-right p-1">
-							<a href="/snaps/<%= snap._id %>/comments/<%= comment._id %>/edit">
-								<button class="btn btn-sm btn-warning btn-wide">
-									<%- octicons.pencil.toSVG({"class":"octi-sm"}) %>
-								</button>
-							</a>
-						</div>
-						<p>
-							<strong><%= comment.author.username %></strong>
-						</p>
+						<% if (currentUser && comment.author.id.equals(currentUser.id)) { %>
+							<div class="float-right p-1">
+								<form action="/snaps/<%= snap._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+									<button class="btn btn-sm btn-danger btn-wide">
+										<%- octicons.trashcan.toSVG({"class":"octi-sm"}) %>
+									</button>
+								</form>
+							</div>
+							<div class="float-right p-1">
+								<a href="/snaps/<%= snap._id %>/comments/<%= comment._id %>/edit">
+									<button class="btn btn-sm btn-warning btn-wide">
+										<%- octicons.pencil.toSVG({"class":"octi-sm"}) %>
+									</button>
+								</a>
+							</div>
+						<% } %>
+						<p><strong><%= comment.author.username %></strong></p>
 						<p><%= comment.text %></p>
 					</div>
 				<% }) %>

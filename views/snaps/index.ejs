@@ -16,17 +16,7 @@
 							<img src="<%= snaps[i].imgurl %>" class="snap" alt="<%= snaps[i].title %>">
 							<div class="label">
 								<div class="btn btn-primary label-text">
-									<%- octicons["arrow-up"].toSVG({"class":"octi-sm"}) %>
-									<%- octicons["arrow-down"].toSVG({"class":"octi-sm-label"}) %>
-									<%= snaps[i].rating %>
-									<br>
-									<%- octicons.comment.toSVG({"class":"octi-sm-label"}) %>
-									<%= snaps[i].comments.length %> 
-									<% if (snaps[i].comments.length === 1) { %>
-										comment
-									<% } else { %>
-										comments
-									<% } %>
+									Go to Snap
 								</div>
 							</div>
 						</a>

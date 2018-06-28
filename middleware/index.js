@@ -91,7 +91,7 @@ middlewareObject.alreadyVoted = function(req, res, next){
 				if (goToNext) {
 					next();
 				} else {
-					req.flash("error", "You already voted on this Snap");
+					req.flash("error", "You can only vote once");
 					res.redirect("back");
 				}
 			}

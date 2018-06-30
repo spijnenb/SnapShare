@@ -1,7 +1,39 @@
-var Snap 	= require("../models/snap"),
+var multer	= require("multer"),
+	Snap 	= require("../models/snap"),
 	Comment = require("../models/comment"),
 	User 	= require("../models/user");
 
+// config multer
+var storage = multer.diskStorage({
+	destination: function(req, file, cb){
+		cb(null, './uploads');
+	},
+	filename: function(req, file, cb){
+		var filename = createFileName(req);
+		// add file extensions for .jpg and .png files
+		if (file.mimetype === "image/jpeg") {
+			cb(null, filename + ".jpg");
+		} else if (file.mimetype === "image/png") {
+			cb(null, filename + ".png");
+		}
+	}
+});
+
+function fileFilter(req, file, cb) {
+	// only save .jpg and .png files
+	if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+		cb(null,true);
+	} else {
+		cb(null, false);
+	}
+}
+
+function createFileName(req) {
+	// return hexadecimal concatenated string of userid and timestamp
+	return "" + req.user.id + (Date.now().toString(16));
+}
+
+// declare middleware object and add methods
 var middlewareObject = {};
 
 middlewareObject.isLoggedIn = function(req, res, next) {
@@ -101,5 +133,13 @@ middlewareObject.alreadyVoted = function(req, res, next){
 		res.redirect("back");
 	}
 }
+
+middlewareObject.upload = multer({
+	storage, storage, 
+	limits:{
+		fileSize: 1024 * 512		// 500kb size limit
+	},
+	fileFilter: fileFilter
+});
 
 module.exports = middlewareObject;

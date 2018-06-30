@@ -6,48 +6,6 @@ var express 	= require("express"),
 	Comment		= require("../models/comment"),
 	User		= require("../models/user");
 
-// setup file uploads - todo refactor middleware
-var storage = multer.diskStorage({
-	destination: function(req, file, cb){
-		cb(null, './uploads');
-	},
-	filename: function(req, file, cb){
-		var filename = simpleHash();
-		if (file.mimetype === "image/jpeg") {
-			cb(null, filename + ".jpg");
-		} else if (file.mimetype === "image/png") {
-			cb(null, filename + ".png");
-		}
-	}
-});
-
-var upload = multer({
-	storage, storage, 
-	limits:{
-		fileSize: 1024 * 512		// 500kb
-	},
-	fileFilter: fileFilter
-});
-
-function fileFilter(req, file, cb) {
-	if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-		cb(null,true);
-	} else {
-		cb(null, false);
-	}
-}
-
-function simpleHash() {
-	// todo tmp solution.. refactor with userid+timestamp
-	var letters = "abcdefghijklmnopqrstuvwxyz";
-	var hash = Date.now().toString(16);
-	for (var i = 0; i < 4; i++) {
-		var rng = Math.floor(Math.random() * hash.length + 1);
-		hash += letters.charAt(rng);
-	}
-	return hash;
-}
-
 // INDEX ROUTE
 router.get("/snaps", function(req, res){
 	Snap.find({}, function(err, snaps){
@@ -65,7 +23,7 @@ router.get("/snaps/new", middleware.isLoggedIn, function(req, res){
 });
 
 // CREATE ROUTE
-router.post("/snaps", middleware.isLoggedIn, upload.single('image'), function(req, res){
+router.post("/snaps", middleware.isLoggedIn, middleware.upload.single('image'), function(req, res){
 	var savedImage = (req.file) ? '/' + req.file.path : req.body.imgurl;
 	var author = {
 		id: req.user._id,

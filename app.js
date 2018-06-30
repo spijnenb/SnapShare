@@ -15,8 +15,8 @@ var express 		= require("express"),
 	snapRoutes		= require("./routes/snaps"),
 	commentRoutes	= require("./routes/comments");
 
-	// clears database
-	var clearDB		= require("./clearDB")();
+// clears database and execute
+// var clearDB		= require("./clearDB")();
 
 // environment vars
 process.env.IP = process.env.IP || "localhost";

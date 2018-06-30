@@ -92,3 +92,12 @@ body {
 	text-align: right;
 	padding-right: 20px;
 }
+@media screen and (min-width: 992px) {
+	.underlined {
+		width: 0px;
+		margin: auto;
+		border-bottom: 2px solid #007bff;
+		transition: .5s ease;
+		-webkit-transition: .5s ease;
+	}
+}

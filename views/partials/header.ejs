@@ -38,12 +38,18 @@
 						<%- octicons.person.toSVG({"class":"octi-sm octi-nav"}) %>
 						Log-in
 					</a>
+					<% if (typeof page != "undefined" && page === "login") { %>
+						<div class="underlined"></div>
+					<% } %>
 				</li>
 				<li class="nav-item <%= typeof page != "undefined" && page === "register" ? "active":''; %>">
 					<a href="/register" class="nav-link">
 						<%- octicons.person.toSVG({"class":"octi-sm octi-nav"}) %>
 						Register
 					</a>
+					<% if (typeof page != "undefined" && page === "register") { %>
+						<div class="underlined"></div>
+					<% } %>
 				</li>
 			<% } %>
 		</ul>

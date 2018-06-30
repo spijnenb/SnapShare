@@ -41,7 +41,7 @@ middlewareObject.isLoggedIn = function(req, res, next) {
 		return next();
 	} else {
 		req.flash("error", "Please login first");
-		res.redirect("/snaps");
+		res.redirect("back");
 	}
 }
 

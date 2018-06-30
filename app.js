@@ -16,7 +16,7 @@ var express 		= require("express"),
 	commentRoutes	= require("./routes/comments");
 
 // clears database and execute
-// var clearDB		= require("./clearDB")();
+// var clearDB	= require("./clearDB")();
 
 // environment vars
 process.env.IP = process.env.IP || "localhost";

@@ -1,0 +1,27 @@
+<% include ../partials/header.ejs %>
+
+<div class="container-fluid-p-0">
+	<div class="jumbotron text-center">
+		<h1>Edit profile</h1>
+		<p><a href="/users/<%= user.id %>">or go back</a></p>
+	</div>
+</div>
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-sm-12 col-md-6 col-lg-6">
+			<form action="/users/<%= user.id %>?_method=PUT" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="avatar">Upload an avatar</label>
+					<input type="file" class="form-control" id="avatar" name="avatar">
+				</div>
+				<div class="form-group">
+					<label for="description">Tell something about yourself</label>
+					<textarea class="form-control" rows="6" id="description" name="description"><%= user.description %></textarea>
+				</div>
+				<input type="submit" class="btn btn-primary" value="Send">
+			</form>
+		</div>
+	</div>
+</div>
+
+<% include ../partials/footer.ejs %>

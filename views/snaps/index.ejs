@@ -8,21 +8,21 @@
 	</div>
 </div>
 <div class="container">
-	<div class="row align-items-center grid">
-		<% for (var i = snaps.length - 1; i >= 0; i--) { %>
-			<div class="col-sm-6 col-md-3 p-0">
-				<div class="snap-container">
-						<a href="/snaps/<%= snaps[i]._id %>">
-							<img src="<%= snaps[i].imgurl %>" class="snap" alt="<%= snaps[i].title %>">
-							<div class="label">
-								<div class="btn btn-primary label-text">
-									Go to Snap
-								</div>
+	<div class="row align-items-center">
+		<% snaps.forEach(function(snap) { %>
+			<div class="col-6 col-md-3 p-0">
+				<div class="el-container">
+					<a href="/snaps/<%= snap.id %>">
+						<img src="<%= snap.imgurl %>" class="snap" alt="<%= snap.title %>">
+						<div class="label">
+							<div class="btn btn-primary">
+								Go to Snap
 							</div>
-						</a>
+						</div>
+					</a>
 				</div>
 			</div>
-		<% } %>
+		<% }) %>
 	</div>
 </div>
 

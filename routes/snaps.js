@@ -8,11 +8,11 @@ var express 	= require("express"),
 
 // INDEX ROUTE
 router.get("/snaps", function(req, res){
-	Snap.find({}, function(err, snaps){
+	Snap.find({}).sort({"createdAt":-1}).exec(function(err, snaps){
 		if (err) {
 			res.send("Something went wrong, cannot find Snaps :S");
 		} else {
-			res.render("snaps/index", {snaps:snaps});
+			res.render("snaps/index", {snaps:snaps, page:"index"});
 		}
 	});
 });
@@ -75,6 +75,7 @@ router.delete("/snaps/:id", middleware.checkSnapOwnership, function(req, res){
 });
 
 // Voting route
+// todo refactor this
 router.post("/snaps/:id",middleware.alreadyVoted, function(req, res){
 	var vote = req.body.rating;
 	// get snap, update value, save

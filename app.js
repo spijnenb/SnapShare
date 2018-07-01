@@ -13,7 +13,8 @@ var express 		= require("express"),
 	User			= require("./models/user"),
 	indexRoutes		= require("./routes/index"),
 	snapRoutes		= require("./routes/snaps"),
-	commentRoutes	= require("./routes/comments");
+	commentRoutes	= require("./routes/comments"),
+	usersRoutes		= require("./routes/users");
 
 // clears database and execute
 // var clearDB	= require("./clearDB")();
@@ -63,6 +64,7 @@ app.use(function(req, res, next){
 app.use(indexRoutes);
 app.use(snapRoutes);
 app.use(commentRoutes);
+app.use(usersRoutes);
 
 app.get('*', function(res, res){
 	res.send("Not found");

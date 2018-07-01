@@ -7,7 +7,9 @@ var userSchema = mongoose.Schema({
 	votes: [{
 		type: mongoose.Schema.Types.ObjectId,
         ref: "Snap"
-	}]
+	}],
+	avatar: String,
+	description: String
 });
 
 userSchema.plugin(passportLocalMongoose);

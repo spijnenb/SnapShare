@@ -5,8 +5,6 @@ var express 	= require("express"),
 	Snap		= require("../models/snap"),
 	Comment		= require("../models/comment");
 
-// todo refactor routes
-
 // NEW ROUTE
 router.get("/snaps/:id/comments/new", middleware.isLoggedIn, function(req, res){
 	Snap.findById(req.params.id, function(err, snap){

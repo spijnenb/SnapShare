@@ -1,4 +1,7 @@
 setTimeout(function(){
-	document.querySelector(".underlined").style.width = "100%";
+	var el = document.querySelector("#underlined");
+	if (el) {
+		el.style.width = "100%";
+	}
 },100);
 

@@ -1,11 +1,6 @@
 body {
 	font-family: 'Roboto', 'Arial', sans-serif;
 }
-.grid img {
-	border-radius: 5%;
-	padding: 5px;
-	width:100%;
-}
 .btn-wide {
 	width: 40px;
 	padding-bottom: 0;
@@ -41,13 +36,18 @@ body {
 .jumbotron {
 	background-color: #eee;
 }
-.snap-container {
+.el-container {
 	position: relative;
+	padding: 5px;
 }
 .snap {
+	width:100%;
 	opacity: 1;
 	display: block;
 	transition: .05s ease;
+}
+.snap {
+	border-radius: 5%;
 }
 .label {
 	transition: 0.3s linear;
@@ -59,14 +59,14 @@ body {
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 }
-.snap-container:hover .snap {
+.el-container:hover .snap {
 	filter: brightness(50%);
 }
-.snap-container:hover .label {
-	opacity: 1;
+.el-container:hover .user {
+	filter: brightness(50%);
 }
-.label-text {
-	width: 180px;
+.el-container:hover .label {
+	opacity: 1;
 }
 .navbar-dark .navbar-text {
 	color: #fff;
@@ -93,11 +93,24 @@ body {
 	padding-right: 20px;
 }
 @media screen and (min-width: 992px) {
-	.underlined {
+	#underlined {
 		width: 0px;
 		margin: auto;
 		border-bottom: 2px solid #007bff;
 		transition: .5s ease;
 		-webkit-transition: .5s ease;
 	}
+	.fix-height {
+		height: 42px;
+	}
+}
+.align-last-col td:nth-last-of-type(1) {
+	text-align: right;
+}
+.align-last-col th:nth-of-type(2) {
+	text-align: right;
+}
+.user-image {
+	width: 100%;
+	max-height: 500px;
 }

@@ -22,8 +22,23 @@
 	</button>
 
 	<div class="collapse navbar-collapse" id="toggler">
-		<div class="mr-auto"></div>
-		<ul class="navbar-nav mr-0 mt-2 mt-lg-0">
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0 fix-height">
+
+			<li class="nav-item <%= typeof page != "undefined" && page === "index" ? "active":''; %>">
+				<a href="/" class="nav-link">Home</a>
+				<% if (typeof page != "undefined" && page === "index") { %>
+					<div id="underlined"></div>
+				<% } %>
+			</li>
+			<li class="nav-item <%= typeof page != "undefined" && page === "users" ? "active":''; %>">
+				<a href="/users" class="nav-link">Users</a>
+				<% if (typeof page != "undefined" && page === "users") { %>
+					<div id="underlined"></div>
+				<% } %>
+			</li>
+		</ul>
+		<ul class="navbar-nav mr-0 mt-2 mt-lg-0 fix-height">
+
 			<% if (typeof currentUser != "undefined") { %>
 				<li class="nav-item"><span class="navbar-text pr-5">Logged in as <%= currentUser.username %></span></li>
 				<li class="nav-item">
@@ -39,7 +54,7 @@
 						Log-in
 					</a>
 					<% if (typeof page != "undefined" && page === "login") { %>
-						<div class="underlined"></div>
+						<div id="underlined"></div>
 					<% } %>
 				</li>
 				<li class="nav-item <%= typeof page != "undefined" && page === "register" ? "active":''; %>">
@@ -48,7 +63,7 @@
 						Register
 					</a>
 					<% if (typeof page != "undefined" && page === "register") { %>
-						<div class="underlined"></div>
+						<div id="underlined"></div>
 					<% } %>
 				</li>
 			<% } %>

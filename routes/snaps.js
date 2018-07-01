@@ -32,15 +32,27 @@ router.post("/snaps", middleware.isLoggedIn, middleware.upload.single('image'), 
 	var data = {
 		imgurl: savedImage,
 		title: req.body.title,
-		author: author,
-		rating: 0
+		author: author
 	}
 
+	// save image-url to db
 	if (savedImage && data.title.length > 1) {
 		Snap.create(data, function(err, addedSnap){
-			if (err) req.flash("error", err.message);
-			res.redirect("/snaps");
+			if (err) {
+				req.flash("error", err.message);
+			} else {
+				User.findById(req.user.id, function(err, user){
+					if (err || !user) {
+						req.flash("error", "Something went wrong, cannot find user");
+					} else {
+						user.snapsTotal++;
+						user.save();
+					}
+					res.redirect("/snaps");
+				});
+			}
 		});
+	// ex handling
 	} else if (data.title.length < 1) {
 		req.flash("error", "Don't forget to fill in a title");
 		res.redirect("/snaps/new");

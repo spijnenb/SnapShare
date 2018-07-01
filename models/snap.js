@@ -10,7 +10,7 @@ var snapSchema = new mongoose.Schema({
 		username: String
 	},
 	imgurl: String,
-	rating: Number,
+	rating: {type: Number, default: 0},
 	createdAt: {type: Date, default: Date.now},
 	comments: [{
 		type: mongoose.Schema.Types.ObjectId,

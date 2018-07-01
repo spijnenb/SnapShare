@@ -9,7 +9,8 @@ var userSchema = mongoose.Schema({
         ref: "Snap"
 	}],
 	avatar: String,
-	description: String
+	description: String,
+	snapsTotal: {type: Number, default: 0}
 });
 
 userSchema.plugin(passportLocalMongoose);

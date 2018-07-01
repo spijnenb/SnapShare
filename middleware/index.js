@@ -101,6 +101,26 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
 	}
 }
 
+middlewareObject.checkProfileOwnership = function(req, res, next) {
+	if (req.isAuthenticated()) {
+		User.findById(req.params.userid, function(err, user){
+			if (err || !user) {
+				req.flash("error", "User not found");
+			} else {
+				if (req.user.id === user.id) {
+					next();
+				} else {
+					req.flash("error", "You are not authorized to do that");
+					res.redirect("back");
+				}
+			}
+		});
+	} else {
+		req.flash("error", "Please login first");
+		res.redirect("back");
+	}
+}
+
 middlewareObject.alreadyVoted = function(req, res, next){
 	var goToNext = true;
 	// check if user is logged in
@@ -116,7 +136,6 @@ middlewareObject.alreadyVoted = function(req, res, next){
 					// cannot set headers with callback, therefore use goToNext var
 					// if vote equals current snap, don't go to next
 					if (vote.equals(req.params.id)) {
-						
 						goToNext = false;
 					}
 				});

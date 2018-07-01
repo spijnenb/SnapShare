@@ -2,25 +2,28 @@
 
 <div class="container-fluid-p-0">
 	<div class="jumbotron text-center">
-		<h1>Userprofile of <%= user.username %></h1>
+		<h1>User profile of <%= user.username %></h1>
 	</div>
 </div>
 <div class="container">
 	<div class="row">
 		<div class="col-12 col-md-4 col-lg-3">
-				<div class="mb-5">
-					<img src="<%= user.avatar %>" class="user-image">
-				</div>
-			<a href="/users/<%= user.id %>/edit" class="btn btn-warning w-100 mb-1">
-				<%- octicons.pencil.toSVG({}) %>
-				<span class="ml-1">Edit your profile</span>
-			</a>
-			<form action="/users/<%= user.id %>?_method=DELETE" method="post">
-				<button class="btn btn-danger w-100 mb-5">
-					<%- octicons.trashcan.toSVG({"class":"octi-sm"}) %>
-					<span class="ml-1">Delete your account</span>
-				</button>
-			</form>
+			<div class="mb-5">
+				<img src="<%= user.avatar %>" class="user-image">
+			</div>
+			<% if (currentUser && user._id.equals(currentUser.id)) { %>
+				<a href="/users/<%= user.id %>/edit" class="btn btn-warning w-100 mb-1">
+					<%- octicons.pencil.toSVG({}) %>
+					<span class="ml-1">Edit your profile</span>
+				</a>
+
+				<form action="/users/<%= user.id %>?_method=DELETE" method="post">
+					<button class="btn btn-danger w-100 mb-5" id="delete">
+						<%- octicons.trashcan.toSVG({"class":"octi-sm"}) %>
+						<span class="ml-1">Delete your account</span>
+					</button>
+				</form>
+			<% } %>
 		</div>
 		<div class="col-12 col-md-8 col-lg-9">
 			<h2 class="mb-5"><strong><%= user.username %></strong></h2>

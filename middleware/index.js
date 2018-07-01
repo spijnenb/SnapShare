@@ -107,7 +107,7 @@ middlewareObject.checkProfileOwnership = function(req, res, next) {
 			if (err || !user) {
 				req.flash("error", "User not found");
 			} else {
-				if (req.user.id === user.id) {
+				if (req.user._id.equals(user.id)) {
 					next();
 				} else {
 					req.flash("error", "You are not authorized to do that");

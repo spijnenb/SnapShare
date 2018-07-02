@@ -8,7 +8,7 @@ With these instructions you can easily install this app on a local machine.
 
 ### Prerequisites
 
-This a Express app. You will need Node, NPM and MongoDB to run the app. I recommend using [Laragon](https://laragon.org) to quickly install everything you need.
+This an Express app. You will need Node, NPM and MongoDB to run the app. I recommend using [Laragon](https://laragon.org) to quickly install everything you need.
 
 ### Installing
 

@@ -1,3 +1,7 @@
 node_modules
-package-lock.json
+
+# ignore all images in upload folder
 uploads/*
+
+# exclude .gitkeep
+!uploads/.gitkeep

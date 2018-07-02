@@ -106,6 +106,7 @@ middlewareObject.checkProfileOwnership = function(req, res, next) {
 		User.findById(req.params.userid, function(err, user){
 			if (err || !user) {
 				req.flash("error", "User not found");
+				res.redirect("/users");
 			} else {
 				if (req.user._id.equals(user.id)) {
 					next();

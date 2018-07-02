@@ -22,7 +22,7 @@ router.get("/users/:userid", function(req, res) {
 	User.findById(req.params.userid, function(err, user){
 		if (err || !user) {
 			req.flash("error", "User not found");
-			res.redirect("back");
+			res.redirect("/users");
 		} else {
 			Snap.find({"author.id": user.id}).sort({"createdAt": -1}).limit(4).exec(function(err, snaps){
 				if (err) {
@@ -41,7 +41,7 @@ router.get("/users/:userid/edit", middleware.checkProfileOwnership, function(req
 	User.findById(req.params.userid, function(err, user){
 		if (err || !user) {
 			req.flash("error", "User not found");
-			res.redirect("back");
+			res.redirect("/users");
 		} else {
 			res.render("users/edit.ejs", {user:user});
 		}
@@ -58,7 +58,7 @@ router.put("/users/:userid", middleware.checkProfileOwnership, middleware.upload
 	data.description = req.body.description;
 	// find user
 	User.findByIdAndUpdate(userID, data, function(err, user){
-		if (err) {
+		if (err || !user) {
 			req.flash("error", err.message);
 			res.redirect("back");
 		} else {
